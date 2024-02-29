@@ -1,0 +1,13 @@
+mini_batch_num_epochs: 400
+full_batch_num_epochs: 20
+
+optim_params:
+  lr: 0.1
+  pseudocount: 0.1
+
+scheduler_params:
+  method: multi_linear
+  lrs: 
+    - 0.1
+  milestone_steps:
+    - 0

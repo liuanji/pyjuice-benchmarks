@@ -1,0 +1,28 @@
+target: src.data.DataModuleFromConfig
+params:
+  batch_size: 64
+  num_workers: 32
+  drop_last: true
+  pin_memory: true
+  sampler: __subset__:40000
+  train:
+    target: src.data.CelebA256Train
+    params:
+      root: /scratch/anji/data/CelebA/
+  validation:
+    target: src.data.CelebA256Validation
+    params:
+      root: /scratch/anji/data/CelebA/
+  transform_fns:
+    - target: src.transforms.Select
+      params:
+        key: image
+    - target: torchvision.transforms.ToTensor
+    - target: src.transforms.Patchify
+      params:
+        patch_size: 16
+    - target: src.transforms.RGB2YCoCg
+    - target: src.transforms.Quantize
+      params:
+        num_levels: 256
+    - target: src.transforms.Flatten

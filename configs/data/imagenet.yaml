@@ -1,0 +1,30 @@
+target: src.data.DataModuleFromConfig
+params:
+  batch_size: 64
+  num_workers: 64
+  drop_last: true
+  pin_memory: true
+  sampler: __subset__:40000
+  train:
+    target: src.data.ImageNetTrain
+    params:
+      root: /scratch/anji/data/ImageNet/train/
+      size: 256
+  validation:
+    target: src.data.ImageNetValidation
+    params:
+      root: /scratch/anji/data/ImageNet/val/
+      size: 256
+  transform_fns:
+    - target: src.transforms.Select
+      params:
+        key: image
+    - target: torchvision.transforms.ToTensor
+    - target: src.transforms.Patchify
+      params:
+        patch_size: 16
+    - target: src.transforms.RGB2YCoCg
+    - target: src.transforms.Quantize
+      params:
+        num_levels: 256
+    - target: src.transforms.Flatten
