@@ -4,7 +4,7 @@ This repository contains code to benchmark common Probabilistic Circuit structur
 
 ## Usage
 
-Make sure PyJuice is properly installed. You can find more instructions in the repository. Or install it with pip:
+Make sure PyJuice is properly installed. You can find more instructions in the repository. The simplest way is to install it with pip:
 
 ```
 pip install pyjuice
