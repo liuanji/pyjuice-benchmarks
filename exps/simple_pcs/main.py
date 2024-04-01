@@ -28,6 +28,7 @@ def mini_batch_em_epoch(num_epochs, pc, optimizer, scheduler, train_loader, val_
     progressbar = ProgressBar(num_epochs, len(train_loader), statistics_name = ["LL"], cumulate_statistics = True)
     for epoch in range(num_epochs):
         progressbar.new_epoch_begin()
+        pc.init_param_flows(flows_memory = 0.0) # Zero out flows
         total_train_ll = 0.0
         for x in train_loader:
             x = x.to(device, non_blocking = True)
