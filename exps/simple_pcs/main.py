@@ -78,6 +78,7 @@ def full_batch_em_epoch(num_epochs, pc, train_loader, val_loader, device):
         with torch.no_grad():
             t0 = time.time()
             total_train_ll = 0.0
+            pc.init_param_flows(flows_memory = 0.0) # Zero out flows
             for x in train_loader:
                 x = x.to(device, non_blocking = True)
 
