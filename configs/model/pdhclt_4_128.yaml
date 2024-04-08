@@ -4,4 +4,4 @@ params:
   data_shape: ${as_tuple:3,16,16}
   num_latents: 128
   split_intervals: ${as_tuple:3,4,4}
-  max_prod_group_conns: 8
+  max_prod_block_conns: 8
