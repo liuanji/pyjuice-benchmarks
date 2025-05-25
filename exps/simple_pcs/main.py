@@ -82,12 +82,13 @@ def full_batch_em_epoch(num_epochs, pc, train_loader, val_loader, device):
             for x in train_loader:
                 x = x.to(device, non_blocking = True)
 
-                lls = pc(x)
-                pc.backward(x, flows_memory = 1.0)
+                lls = pc(x, propagation_alg = "LL")
+                pc.backward(x, flows_memory = 1.0, allow_modify_flows = False,
+                            propagation_alg = "LL", logspace_flows = True)
 
                 total_train_ll += lls.mean().detach().cpu().numpy().item()
 
-            pc.mini_batch_em(step_size = 1.0, pseudocount = 0.1)
+            pc.mini_batch_em(step_size = 1.0, pseudocount = 1e-5)
 
             aveg_train_ll = total_train_ll / len(train_loader)
 
