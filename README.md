@@ -10,6 +10,8 @@ Make sure PyJuice is properly installed. You can find more instructions in the r
 pip install pyjuice
 ```
 
+If you want to use the latest dev version of PyJuice, please follow the instructions in [the PyJuice repo](https://github.com/Tractables/pyjuice).
+
 Go to the `exps/simple_pcs/` directory:
 
 ```
