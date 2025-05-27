@@ -62,3 +62,21 @@ ImageNet
 │   ├── val
 │   │   ├── val_data.npz
 ```
+
+## Examples
+
+For example, to reproduce the results of PD-mid and PD-large on ImageNet32 (Table 3 in the [PyJuice paper](https://arxiv.org/pdf/2406.00766)), simply run
+
+```bash
+cd exps/simple_pcs
+python main.py --data-config ../../configs/data/imagenet32.yaml --model-config ../../configs/model/pd_128.yaml # PD-mid
+python main.py --data-config ../../configs/data/imagenet32.yaml --model-config ../../configs/model/pd_256.yaml # PD-large
+```
+
+Similarly, to use other models such as HCLT-mid and HCLT-large, please run
+
+```bash
+cd exps/simple_pcs
+python main.py --data-config ../../configs/data/imagenet32.yaml --model-config ../../configs/model/hclt_256.yaml # HCLT-mid
+python main.py --data-config ../../configs/data/imagenet32.yaml --model-config ../../configs/model/hclt_512.yaml # HCLT-large
+```
