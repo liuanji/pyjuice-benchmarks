@@ -67,12 +67,22 @@ def mini_batch_em_epoch(num_epochs, pc, optimizer, scheduler, train_loader, val_
     return best_ll_pair[0], best_ll_pair[1], all_ll_pairs
 
 
-def full_batch_em_epoch(num_epochs, pc, train_loader, val_loader, device):
+def full_batch_em_epoch(num_epochs, pc, train_loader, val_loader, device, record_cudagraph = False):
     if num_epochs == 0:
         return -1000000.0, -1000000.0, [(-1000000.0, -1000000.0)]
 
     best_ll_pair = (-1000000.0, -1000000.0)
     all_ll_pairs = []
+
+    if record_cudagraph:
+        for x in train_loader:
+            x = x.to(device, non_blocking = True)
+
+            lls = pc(x, propagation_alg = "LL", record_cudagraph = True)
+            pc.backward(x, flows_memory = 1.0, allow_modify_flows = False,
+                        propagation_alg = "LL", logspace_flows = True, record_cudagraph = True)
+
+            break
 
     for epoch in range(num_epochs):
         with torch.no_grad():
@@ -121,6 +131,7 @@ def main():
     parser.add_argument("--optim-config", type = str, default = "../../configs/optim/full_batch_only.yaml")
     parser.add_argument("--batch-size", type = int, default = 0)
     parser.add_argument("--gpu", type = int, default = 0)
+    parser.add_argument("--record-cudagraph", default = False, action = "store_true")
 
     args = parser.parse_args()
 
@@ -166,7 +177,7 @@ def main():
         mini_batch_num_epochs, pc, optimizer, scheduler, train_loader, val_loader, device
     )
     best_tr_ll2, best_vl_ll2, ll_pairs2 = full_batch_em_epoch(
-        full_batch_num_epochs, pc, train_loader, val_loader, device
+        full_batch_num_epochs, pc, train_loader, val_loader, device, record_cudagraph = args.record_cudagraph
     )
 
     if best_vl_ll1 > best_vl_ll2:
