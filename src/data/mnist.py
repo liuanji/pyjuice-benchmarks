@@ -1,10 +1,13 @@
 import numpy as np
 import torch
+import torchvision
 import os
 from torch.utils.data import Dataset, Sampler, DataLoader
 from torchvision import transforms
 from PIL import Image
 from torchvision.transforms import v2
+
+from src.utils import instantiate_from_config
 
 class MNIST(Dataset):
     def __init__(self, root_dir = "/scratch/anji/data/MNIST", train = True, transform_fns = None):
@@ -22,6 +25,7 @@ class MNIST(Dataset):
 
     def __getitem__(self, index):
         img = self.dataset[index]
+        img = torchvision.transforms.functional.pil_to_tensor(img[0]).long()
 
         return self.transforms(img)
 

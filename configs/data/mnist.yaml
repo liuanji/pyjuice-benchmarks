@@ -7,12 +7,12 @@ params:
   train:
     target: src.data.MNIST
     params:
-      root: /scratch/anji/data/MNIST/
+      root_dir: /scratch/anji/data/MNIST/
       train: true
   validation:
     target: src.data.MNIST
     params:
-      root: /scratch/anji/data/MNIST/
+      root_dir: /scratch/anji/data/MNIST/
       train: false
   transform_fns:
     - target: src.transforms.Flatten

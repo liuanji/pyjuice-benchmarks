@@ -161,7 +161,7 @@ class DataModuleFromConfig(pl.LightningDataModule):
         if sampler is None and self.sampler is not None:
             sampler = self.sampler
 
-        if sampler.startswith("__subset__:"):
+        if sampler is not None and sampler.startswith("__subset__:"):
             sampler = RandomSampler(self.datasets["train"], False, int(sampler.split(":")[1]))
 
         if sampler is None:
