@@ -80,3 +80,11 @@ cd exps/simple_pcs
 python main.py --data-config ../../configs/data/imagenet32.yaml --model-config ../../configs/model/hclt_256.yaml # HCLT-mid
 python main.py --data-config ../../configs/data/imagenet32.yaml --model-config ../../configs/model/hclt_512.yaml # HCLT-large
 ```
+
+To benchmark the runtime, please also add the `--record-cudagraph` flag, e.g.,
+
+```
+python main.py --data-config ../../configs/data/mnist.yaml --model-config ../../configs/model/hclt_256.yaml --record-cudagraph
+```
+
+The above line will give the runtime of the model HCLT-256.
