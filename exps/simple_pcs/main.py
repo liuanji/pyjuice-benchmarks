@@ -98,7 +98,9 @@ def full_batch_em_epoch(num_epochs, pc, train_loader, val_loader, device, record
 
                 total_train_ll += lls.mean().detach().cpu().numpy().item()
 
-            pc.mini_batch_em(step_size = 1.0, pseudocount = 1e-5)
+            t1 = time.time()
+
+            pc.mini_batch_em(step_size = 1.0, pseudocount = 0.1)
 
             aveg_train_ll = total_train_ll / len(train_loader)
 
@@ -111,8 +113,6 @@ def full_batch_em_epoch(num_epochs, pc, train_loader, val_loader, device, record
                     total_val_ll += lls.mean().detach().cpu().numpy().item()
 
             aveg_val_ll = total_val_ll / len(val_loader)
-
-            t1 = time.time()
 
             print(f"[train LL: {aveg_train_ll:.2f}; val LL: {aveg_val_ll:.2f}].....[time {t1-t0:.2f}] ")
 
